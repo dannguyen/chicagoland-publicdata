@@ -83,7 +83,9 @@ td.domain .dot { display: inline-block; width: 8px; height: 8px; margin-right: 6
 .dot.chicago { background: var(--chicago); }
 .dot.cook-county { background: var(--cook-county); }
 .dot.illinois { background: var(--illinois); }
-td.name { max-width: 34em; }
+/* Some names are long underscore_joined strings with no break points; without
+   `anywhere` they set the column's minimum width and push the table off screen. */
+td.name { max-width: 34em; overflow-wrap: anywhere; }
 td.name > a { font-weight: 600; text-decoration: none; }
 td.name > a:hover { text-decoration: underline; }
 td.name .desc { color: var(--muted); font-size: 13px; margin-top: 3px; }
@@ -105,11 +107,51 @@ tbody tr:hover { background: #f8fafb; }
 #about-this p:last-child { margin-bottom: 0; }
 #about-this a { text-underline-offset: 2px; }
 
-/* Narrow screens: let the table scroll sideways instead of the page. */
+/* Only shown when the sortable table header is hidden (card layout below). */
+#controls #sort-label { display: none; }
+
+/* Below ~1100px the nine table columns don't fit, so each row becomes a card: the
+   name and description, then a grid of the eight labeled stats (one row of 8, two
+   of 4, or 3/3/2 on phones). */
+@media (max-width: 1100px) {
+  #controls #sort-label { display: flex; }
+
+  table, tbody { display: block; }
+  thead { display: none; }
+  tbody tr {
+    display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px 12px;
+    padding: 14px 0; border-bottom: 1px solid var(--rule);
+  }
+  tbody tr:hover { background: none; }
+  tbody td { padding: 0; border: 0; }
+  td.name { grid-column: 1 / -1; max-width: 46rem; }
+  td.name > a { font-size: 16px; }
+  td.num { text-align: left; }
+  tbody td[data-label]::before {
+    content: attr(data-label); display: block; margin-bottom: 1px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint);
+  }
+}
+@media (max-width: 860px) {
+  tbody tr { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  tbody tr { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Phones: two-column filters with larger touch targets. */
 @media (max-width: 800px) {
   body { padding: 16px 16px 32px; }
-  table { display: block; overflow-x: auto; }
-  #search, #tags-btn, #controls select { width: 100%; max-width: none; }
-  #controls label, #tagpicker { flex: 1 1 100%; }
+
+  #controls { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; padding: 12px; }
+  #controls > label:first-child { grid-column: 1 / -1; }
+  #controls label, #tagpicker { min-width: 0; }
+  /* Tag panel spans the whole controls box rather than its half-width column. */
+  #tagpicker { position: static; }
+  #tags-btn { width: 100%; }
+  #search, #controls select { width: 100%; max-width: none; }
+  /* 16px keeps iOS Safari from zooming in when a field gets focus. */
+  #controls input[type=search], #controls select, #tags-btn { height: 38px; font-size: 16px; }
+
   #about-this { padding: 16px 18px; font-size: 14px; }
 }
