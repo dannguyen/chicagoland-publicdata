@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-23T22:32:27.316Z",
+  "builtAt": "2026-10-23T22:35:05.219Z",
   "datasets": [
     {
       "id": "ydr8-5enu",
@@ -25244,7 +25244,7 @@
       "numColumns": 7,
       "numRows": 222874,
       "rowLabel": "Project Name, Contractor, and Trade by County",
-      "fetchedAt": "2026-10-23T22:32:24.877Z",
+      "fetchedAt": "2026-10-23T22:35:03.166Z",
       "owner": "Department of Labor",
       "frequencyRaw": "",
       "category": "Business and Workforce",
@@ -29781,14 +29781,14 @@
       "link": "https://datacatalog.cookcountyil.gov/Finance-Operations/Procurement-Bid-Tabulations/32au-zaqn",
       "description": "The bid tabulations provided herein are preliminary and are for informational purposes only. The purpose of providing this preliminary information is to improve process transparency. The information contained in the preliminary bid tabulations is subject to change pending math review, analysis of all bids, and review of documentation provided. Bids: All bids estimated at $25,000 or more are publicly opened and read at the time, date, and place specified in the bid document. RFP/RFQ/RFI: Responses to RFP/RFQ/RFI are not publicly opened. Names of respondents will be made available based on the names identified on the sealed package and is, therefore, subject to change. For bid tabulations before June 2016 see https://datacatalog.cookcountyil.gov/d/pn38-yupm",
       "createdAt": "2016-03-22T18:43:36.000Z",
-      "updatedAt": "2026-10-22T22:32:28.000Z",
+      "updatedAt": "2026-10-23T22:32:40.000Z",
       "viewsLastMonth": 1365,
       "viewsTotal": 91592,
       "downloads": 12935,
       "numColumns": 17,
       "numRows": 5681,
       "rowLabel": "Row",
-      "fetchedAt": "2026-10-23T22:11:08.460Z",
+      "fetchedAt": "2026-10-23T22:35:04.260Z",
       "owner": "Office of the Chief Procurement Officer",
       "frequencyRaw": "Daily",
       "category": "Finance & Operations",
