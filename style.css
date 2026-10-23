@@ -91,10 +91,25 @@ td.name .more { border: 0; padding: 0; background: none; color: var(--link); fon
 td.name .freq { color: var(--faint); font-size: 12px; margin-top: 4px; }
 tbody tr:hover { background: #f8fafb; }
 
+/* About box below the table */
+#about-this {
+  max-width: 46rem; margin: 40px 0 0; padding: 20px 24px;
+  background: var(--panel); border-left: 4px solid var(--chicago); border-radius: 0 6px 6px 0;
+  font-size: 15px; line-height: 1.6;
+}
+#about-this h1 {
+  margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+#about-this p { margin: 0 0 12px; }
+#about-this p:last-child { margin-bottom: 0; }
+#about-this a { text-underline-offset: 2px; }
+
 /* Narrow screens: let the table scroll sideways instead of the page. */
 @media (max-width: 800px) {
   body { padding: 16px 16px 32px; }
   table { display: block; overflow-x: auto; }
   #search, #tags-btn, #controls select { width: 100%; max-width: none; }
   #controls label, #tagpicker { flex: 1 1 100%; }
+  #about-this { padding: 16px 18px; font-size: 14px; }
 }

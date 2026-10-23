@@ -247,8 +247,8 @@ function render() {
       cell(fmtNum(r.viewsLastMonth), 'num'),
       cell(fmtNum(r.viewsTotal), 'num'),
       cell(fmtNum(r.downloads), 'num'),
-      cell(fmtDate(r.createdAt), 'date'),
       cell(fmtDate(r.updatedAt), 'date'),
+      cell(fmtDate(r.createdAt), 'date'),
     );
     return tr;
   }));

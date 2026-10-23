@@ -26,5 +26,8 @@ __pycache__/
 # SDD workspace
 .superpowers/
 
+# Assembled Pages site (`npm run site`)
+_site/
+
 # CSV exports
 exports/
