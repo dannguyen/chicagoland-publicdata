@@ -3,7 +3,11 @@
 // into data/datasets.json, the single file index.html loads. Each entry is already
 // in the shape the page renders, so the page does no per-domain normalization.
 //
-// Usage: node scripts/build.mjs
+// Refuses to overwrite data/datasets.json when any portal's dataset count drops by more
+// than MAX_DROP from the previous build, which usually means a truncated or empty
+// catalog fetch. Pass --allow-shrink to accept the drop.
+//
+// Usage: node scripts/build.mjs [--allow-shrink]
 
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -11,6 +15,7 @@ import path from "node:path";
 const CATALOG_DIR = path.join("data", "cached", "catalogs");
 const METADATA_DIR = path.join("data", "cached", "metadata");
 const OUT = path.join("data", "datasets.json");
+const MAX_DROP = 0.1;
 
 // Each portal stores owner/frequency under its own custom metadata keys; the first
 // non-empty key wins. ATTRIBUTION is the standard Socrata resource.attribution field.
@@ -96,6 +101,23 @@ for (const f of catalogFiles) {
   }
   const n = rows.filter((x) => x.domain === config.label).length;
   log(`${domain}: ${n} datasets, ${withMeta} with cached metadata, ${withoutRows} without a row count`);
+}
+
+const countByDomain = (list) => {
+  const counts = {};
+  for (const d of list) counts[d.domain] = (counts[d.domain] ?? 0) + 1;
+  return counts;
+};
+const previous = await readJson(OUT);
+if (previous?.datasets && !process.argv.includes("--allow-shrink")) {
+  const before = countByDomain(previous.datasets);
+  const after = countByDomain(rows);
+  const shrunk = Object.entries(before).filter(([d, n]) => (after[d] ?? 0) < n * (1 - MAX_DROP));
+  if (shrunk.length) {
+    for (const [d, n] of shrunk) log(`build: ${d} dropped from ${n} to ${after[d] ?? 0} datasets`);
+    log(`build: not writing ${OUT}; rerun with --allow-shrink if the drop is real`);
+    process.exit(1);
+  }
 }
 
 await writeFile(OUT, JSON.stringify({ builtAt, datasets: rows }, null, 2));

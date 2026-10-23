@@ -1,0 +1,83 @@
+# Refetches the Socrata catalogs and metadata, rebuilds data/datasets.json, tests it,
+# commits it if it changed, and deploys the site to GitHub Pages.
+# data/cached/ is not in the repo; it persists between runs in the Actions cache.
+name: refresh
+
+on:
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+    inputs:
+      allow_shrink:
+        description: Accept a portal losing more than 10% of its datasets
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - uses: actions/cache/restore@v6
+        with:
+          path: data/cached
+          key: socrata-cache-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: socrata-cache-
+
+      - name: Fetch
+        run: npm run fetch:catalogs && npm run fetch:metadata
+        env:
+          SOCRATA_APP_TOKEN: ${{ secrets.SOCRATA_APP_TOKEN }}
+
+      - uses: actions/cache/save@v6
+        if: always()
+        with:
+          path: data/cached
+          key: socrata-cache-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Build
+        run: npm run build -- ${{ inputs.allow_shrink && '--allow-shrink' || '' }}
+
+      - run: npm test
+
+      - name: Commit datasets.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/datasets.json
+          git commit -m "refresh datasets.json" || exit 0
+          git pull --rebase
+          git push
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/data
+          cp index.html app.js style.css _site/
+          cp data/datasets.json _site/data/
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v5

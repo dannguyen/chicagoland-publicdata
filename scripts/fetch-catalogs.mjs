@@ -45,6 +45,12 @@ async function fetchCatalog(domain) {
     if (page.results.length < PAGE_SIZE || offset >= total) break;
   }
 
+  // Fewer unique datasets than the API reported means a short or duplicated page, not
+  // a smaller catalog. Throwing here keeps the previous catalog on disk.
+  if (byId.size < total) {
+    throw new Error(`${domain}: got ${byId.size} unique datasets, expected resultSetSize ${total}`);
+  }
+
   return {
     domain,
     fetched_at: new Date().toISOString(),
