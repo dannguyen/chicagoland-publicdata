@@ -228,13 +228,15 @@ function render() {
       nameTd.append(freq);
     }
 
-    const cell = (text, cls) => {
+    // data-label is shown in place of the hidden header on narrow screens.
+    const cell = (text, cls, label) => {
       const td = document.createElement('td');
       td.className = cls;
+      td.dataset.label = label;
       td.textContent = text;
       return td;
     };
-    const domainTd = cell('', 'domain');
+    const domainTd = cell('', 'domain', 'Domain');
     const dot = document.createElement('span');
     dot.className = `dot ${r.domain.toLowerCase().replace(/\s+/g, '-')}`;
     domainTd.append(dot, r.domain);
@@ -242,13 +244,13 @@ function render() {
     tr.append(
       nameTd,
       domainTd,
-      cell(fmtNum(r.numRows), 'num'),
-      cell(fmtNum(r.numColumns), 'num'),
-      cell(fmtNum(r.viewsLastMonth), 'num'),
-      cell(fmtNum(r.viewsTotal), 'num'),
-      cell(fmtNum(r.downloads), 'num'),
-      cell(fmtDate(r.updatedAt), 'date'),
-      cell(fmtDate(r.createdAt), 'date'),
+      cell(fmtNum(r.numRows), 'num', 'Rows'),
+      cell(fmtNum(r.numColumns), 'num', 'Columns'),
+      cell(fmtNum(r.viewsLastMonth), 'num', 'Views/mo'),
+      cell(fmtNum(r.viewsTotal), 'num', 'Views total'),
+      cell(fmtNum(r.downloads), 'num', 'Downloads'),
+      cell(fmtDate(r.updatedAt), 'date', 'Updated'),
+      cell(fmtDate(r.createdAt), 'date', 'Created'),
     );
     return tr;
   }));
@@ -258,6 +260,7 @@ function render() {
     th.textContent = th.dataset.key === sortKey ? `${label} ${sortDir < 0 ? '▼' : '▲'}` : label;
     th.classList.toggle('sorted', th.dataset.key === sortKey);
   });
+  sortSelect.value = sortKey;
 
   highlightActiveControls();
 }
@@ -277,6 +280,18 @@ document.querySelectorAll('th.sortable').forEach(th => {
     else { sortKey = th.dataset.key; sortDir = -1; }
     render();
   });
+});
+
+// Narrow screens hide the table header, so they sort with this select instead
+// (always high-to-low / newest first). Built before the first render adds arrows.
+const sortSelect = document.getElementById('sort');
+document.querySelectorAll('th.sortable').forEach(th => {
+  sortSelect.append(new Option(th.textContent, th.dataset.key));
+});
+sortSelect.addEventListener('change', () => {
+  sortKey = sortSelect.value;
+  sortDir = -1;
+  render();
 });
 
 loadData()

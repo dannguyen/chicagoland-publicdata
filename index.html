@@ -9,7 +9,7 @@
   <meta property="og:description" content="A filterable list of Socrata public datasets for Chicago, Cook County, and the state of Illinois" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,9 +28,10 @@
       <div id="tag-list"></div>
     </div>
   </div>
+  <label id="sort-label">Sort by<select id="sort"></select></label>
 </div>
 <div id="status">Loading…</div>
-<button id="reset" type="button">Reset</button>
+<button id="reset" type="button">Reset filters</button>
 <table>
   <thead>
     <tr>
@@ -60,7 +61,7 @@
 </table>
 <script src="app.js" defer></script>
 <section id="about-this">
-  <h1>About this site</h1>
+  <h2>About this site</h2>
   <p>
     This site does a daily fetch of the Socrata data catalogs for
     <a href="https://data.cityofchicago.org">the city of Chicago</a>, <a href="https://datacatalog.cookcountyil.gov">Cook County</a>, and the <a href="https://data.illinois.gov">state of Illinois</a>, and then uses the <a href="https://dev.socrata.com/docs/endpoints">Socrata API's /views endpoint to fetch metadata for each of the datasets</a> (mostly, the current row count).

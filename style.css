@@ -1,42 +1,46 @@
 :root {
-  --ink: #1c2b39;
-  --muted: #5a6876;
-  --faint: #7d8a96;
-  --rule: #dde3e8;
-  --panel: #f3f6f8;
-  --head: #e9eef2;
-  --field-border: #bfc9d2;
-  --link: #1b5e9e;
+  --ink: #222;
+  --muted: #555;
+  --faint: #6b6b6b;
+  --rule: #dcdcdc;
+  --panel: #e6f4fa;     /* pale tint of the flag blue */
+  --field-border: #a9b4ba;
+  --link: #0a5a94;
   --chicago: #41b6e6;   /* Chicago flag blue */
   --cook-county: #2f7d4e;
   --illinois: #13294b;
 }
 * { box-sizing: border-box; }
+/* The two light-blue stripes across the top are the Chicago flag's. */
 body {
-  margin: 0; padding: 24px 24px 48px; background: #fff; color: var(--ink);
-  font: 14px/1.45 "Public Sans", system-ui, sans-serif;
+  margin: 0; padding: 48px 24px 48px; color: var(--ink);
+  background: linear-gradient(var(--chicago) 0 7px, #fff 7px 14px, var(--chicago) 14px 21px) top / 100% 21px no-repeat, #fff;
+  font: 15px/1.5 Archivo, system-ui, sans-serif;
 }
-h1 { font-size: 24px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
-.intro { color: var(--muted); margin: 0 0 16px; }
-a { color: var(--link); }
+h1 {
+  margin: 0 0 6px; font-size: 40px; line-height: 1; font-weight: 800; font-stretch: 72%;
+  letter-spacing: -0.005em;
+}
+.intro { max-width: 46em; color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); text-underline-offset: 2px; }
 :focus-visible { outline: 2px solid var(--link); outline-offset: 1px; }
 
 /* Filter controls */
 #controls {
   display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px;
-  padding: 14px 16px; margin-bottom: 14px; background: var(--panel); border-radius: 6px;
+  padding: 14px 16px; margin-bottom: 14px; background: var(--panel);
 }
 #filters { display: contents; }
-#controls label, #tagpicker { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
+#controls label, #tagpicker { display: flex; flex-direction: column; gap: 3px; font-size: 13px; font-weight: 600; color: var(--ink); }
 input, select, button { font: inherit; color: inherit; }
 #controls input[type=search], #controls select, #tags-btn, tr.min-row input {
-  height: 32px; padding: 0 8px; font-size: 13px; font-weight: 400; color: var(--ink);
-  background-color: #fff; border: 1px solid var(--field-border); border-radius: 4px;
+  height: 32px; padding: 0 8px; font-size: 14px; font-weight: 400; color: var(--ink);
+  background-color: #fff; border: 1px solid var(--field-border); border-radius: 2px;
 }
 /* Same chevron on native selects and the tag picker button, so they read as one family. */
 #controls select, #tags-btn {
   appearance: none; padding-right: 26px; cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235a6876' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23555' stroke-width='1.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 9px center;
 }
 #controls select { max-width: 300px; }
@@ -45,8 +49,7 @@ input, select, button { font: inherit; color: inherit; }
 #tags-btn { width: 220px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #tags-panel {
   position: absolute; top: 100%; left: 0; right: 0; z-index: 10; margin-top: 4px; padding: 8px;
-  background: #fff; border: 1px solid var(--field-border); border-radius: 4px;
-  box-shadow: 0 6px 16px rgba(28, 43, 57, 0.12);
+  background: #fff; border: 1px solid var(--ink); border-radius: 2px;
 }
 #tags-panel input[type=search] { width: 100%; }
 #tag-list { max-height: 320px; overflow-y: auto; margin-top: 6px; }
@@ -56,60 +59,103 @@ input, select, button { font: inherit; color: inherit; }
 #controls .active, tr.min-row input.active { background-color: #fff3b0; border-color: #d4b106; box-shadow: 0 0 0 1px #d4b106; }
 
 #status { margin-bottom: 8px; }
-#status .count { font-weight: 600; }
-#status .fetched { color: var(--faint); font-size: 13px; margin-left: 10px; }
+#status .count { font-weight: 700; }
+#status .fetched { color: var(--faint); font-size: 14px; margin-left: 10px; }
 #reset {
-  margin-bottom: 16px; height: 30px; padding: 0 14px; font-size: 13px; cursor: pointer;
-  background: #fff; border: 1px solid var(--field-border); border-radius: 4px;
+  margin-bottom: 16px; height: 30px; padding: 0 12px; font-size: 14px; cursor: pointer;
+  background: #fff; border: 1px solid var(--field-border); border-radius: 2px;
 }
-#reset:hover { background: var(--panel); }
+#reset:hover { border-color: var(--ink); }
 
-/* Table */
+/* Table. Headers are set condensed so nine columns fit, and sit on a heavy rule. */
 table { border-collapse: collapse; width: 100%; }
 th, td { padding: 10px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
 thead { position: sticky; top: 0; z-index: 1; }
-th { background: var(--head); white-space: nowrap; font-size: 13px; font-weight: 600; }
-thead tr:first-child th { padding-bottom: 6px; border-bottom: 0; }
+th { background: #fff; white-space: nowrap; font-size: 15px; font-weight: 700; font-stretch: 80%; }
+thead tr:first-child th { padding-bottom: 4px; border-bottom: 0; }
+/* Names wrap anywhere (see td.name), so without a set share the auto layout starves this column. */
+thead tr:first-child th:first-child { width: 32%; }
 th.sortable { cursor: pointer; user-select: none; }
-th.sortable:hover { color: var(--link); }
-th.sorted { color: var(--link); }
-tr.min-row th { padding-top: 0; padding-bottom: 8px; border-bottom: 1px solid var(--field-border); }
+th.sortable:hover, th.sorted { color: var(--link); }
+tr.min-row th { padding-top: 0; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
 tr.min-row input { width: 100%; min-width: 70px; height: 28px; font-size: 12px; }
 tr.min-row th.num input { text-align: right; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 td.date { white-space: nowrap; font-variant-numeric: tabular-nums; }
-td.domain { white-space: nowrap; font-size: 13px; }
-td.domain .dot { display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 2px; vertical-align: 1px; }
+td.domain { white-space: nowrap; font-size: 14px; }
+td.domain .dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; vertical-align: 0; }
 .dot.chicago { background: var(--chicago); }
 .dot.cook-county { background: var(--cook-county); }
 .dot.illinois { background: var(--illinois); }
-td.name { max-width: 34em; }
-td.name > a { font-weight: 600; text-decoration: none; }
+/* Some names are long underscore_joined strings with no break points; without
+   `anywhere` they set the column's minimum width and push the table off screen. */
+td.name { max-width: 34em; overflow-wrap: anywhere; }
+td.name > a { font-size: 16px; font-weight: 700; text-decoration: none; }
 td.name > a:hover { text-decoration: underline; }
-td.name .desc { color: var(--muted); font-size: 13px; margin-top: 3px; }
+td.name .desc { color: var(--muted); font-size: 14px; margin-top: 2px; }
 td.name .more { border: 0; padding: 0; background: none; color: var(--link); font-size: inherit; cursor: pointer; text-decoration: underline; }
-td.name .freq { color: var(--faint); font-size: 12px; margin-top: 4px; }
-tbody tr:hover { background: #f8fafb; }
+td.name .freq { color: var(--faint); font-size: 13px; margin-top: 4px; }
+tbody tr:nth-child(even) { background: #f5f5f5; }
+tbody tr:hover { background: var(--panel); }
 
-/* About box below the table */
+/* About box below the table, in the same tint as the filter panel. */
 #about-this {
-  max-width: 46rem; margin: 40px 0 0; padding: 20px 24px;
-  background: var(--panel); border-left: 4px solid var(--chicago); border-radius: 0 6px 6px 0;
-  font-size: 15px; line-height: 1.6;
+  max-width: 44rem; margin: 48px 0 0; padding: 22px 26px 24px;
+  background: var(--panel); font-size: 16px; line-height: 1.6;
 }
-#about-this h1 {
-  margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--muted);
+#about-this h2 {
+  margin: 0 0 10px; font-size: 26px; line-height: 1.1; font-weight: 800; font-stretch: 72%;
 }
 #about-this p { margin: 0 0 12px; }
 #about-this p:last-child { margin-bottom: 0; }
-#about-this a { text-underline-offset: 2px; }
 
-/* Narrow screens: let the table scroll sideways instead of the page. */
+/* Only shown when the sortable table header is hidden (card layout below). */
+#controls #sort-label { display: none; }
+
+/* Below ~1200px the nine table columns don't fit, so each row becomes a card: the
+   name and description, then a grid of the eight labeled stats (one row of 8, two
+   of 4, or 3/3/2 on phones). */
+@media (max-width: 1200px) {
+  #controls #sort-label { display: flex; }
+
+  table, tbody { display: block; }
+  thead { display: none; }
+  tbody tr {
+    display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px 12px;
+    padding: 14px 10px; border-bottom: 1px solid var(--rule);
+  }
+  tbody tr:hover { background: none; }
+  tbody tr:nth-child(even) { background: #f5f5f5; }
+  tbody td { padding: 0; border: 0; }
+  td.name { grid-column: 1 / -1; max-width: 46rem; }
+  td.name > a { font-size: 17px; }
+  td.num { text-align: left; }
+  tbody td[data-label]::before {
+    content: attr(data-label); display: block;
+    font-size: 13px; font-stretch: 80%; color: var(--faint);
+  }
+}
+@media (max-width: 860px) {
+  tbody tr { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  tbody tr { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Phones: two-column filters with larger touch targets. */
 @media (max-width: 800px) {
-  body { padding: 16px 16px 32px; }
-  table { display: block; overflow-x: auto; }
-  #search, #tags-btn, #controls select { width: 100%; max-width: none; }
-  #controls label, #tagpicker { flex: 1 1 100%; }
-  #about-this { padding: 16px 18px; font-size: 14px; }
+  body { padding: 38px 16px 32px; }
+  h1 { font-size: 32px; }
+
+  #controls { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; padding: 12px; }
+  #controls > label:first-child { grid-column: 1 / -1; }
+  #controls label, #tagpicker { min-width: 0; }
+  /* Tag panel spans the whole controls box rather than its half-width column. */
+  #tagpicker { position: static; }
+  #tags-btn { width: 100%; }
+  #search, #controls select { width: 100%; max-width: none; }
+  /* 16px keeps iOS Safari from zooming in when a field gets focus. */
+  #controls input[type=search], #controls select, #tags-btn { height: 38px; font-size: 16px; }
+
+  #about-this { padding: 18px; font-size: 15px; }
 }
