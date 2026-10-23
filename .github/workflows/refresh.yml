@@ -5,7 +5,8 @@ name: refresh
 
 on:
   schedule:
-    - cron: "17 9 * * *"
+    - cron: "10 7 * * *"
+      timezone: America/Chicago
   workflow_dispatch:
     inputs:
       allow_shrink:

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chicago-area Public Data Explorer</title>
+<title>Chicagoland Public Data Explorer</title>
   <meta property="og:title" content="Chicago-area Public Data Explorer"/>
-  <meta name="description" content="A filterable list of Socrata public datasets for Chicago, Cook County, and the state of Illinois" />
+  <meta name="description" content="Explore datasets from the city of Chicago, Cook County, and the state of Illinois" />
   <meta property="og:description" content="A filterable list of Socrata public datasets for Chicago, Cook County, and the state of Illinois" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,8 +13,9 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Chicago, Cook County &amp; Illinois datasets</h1>
-<p class="intro">Every dataset on the three Socrata open data portals, from a cached snapshot of the Socrata catalog.</p>
+<h1>Chicagoland Public Data Explorer/h1>
+<p class="intro">This is a catalog of the public data catalogs from
+  Chicago, Cook County, and Illinois, searchable and filterable so that it's easier to find interesting and useful datasets. <a href="#about-this">Read more about this page</a></p>
 <div id="controls">
   <label>Search name &amp; description<input id="search" type="search" placeholder="e.g. permits"></label>
   <!-- Rebuilt on every filter change; kept separate so the search box keeps focus. -->
@@ -58,5 +59,16 @@
   <tbody></tbody>
 </table>
 <script src="app.js" defer></script>
+<section id="about-this">
+  <h1>About this site</h1>
+  <p>
+    This site does a daily fetch of the Socrata data catalogs for
+    <a href="https://data.cityofchicago.org">the city of Chicago</a>, <a href="https://datacatalog.cookcountyil.gov">Cook County</a>, and the <a href="https://data.illinois.gov">state of Illinois</a>, and then uses the <a href="https://dev.socrata.com/docs/endpoints">Socrata API's /views endpoint to fetch metadata for each of the datasets</a> (mostly, the current row count).
+  </p>
+  <p>
+    I made this site because the current public data portals don't make it easy to know if a dataset is worth clicking through, so I found it useful to compile their catalogs as a table that showed metrics such as number of cells/columns, frequency of updates, and number of views and downloads. Leave questions/issues at the Github repo. Check out my other Chicago public data site, an <a href="https://crashstop.org/chicago/">interactive map and database of Chicago traffic crashes and fatalities: Crash Stop Chicago</a>,
+  </p>
+</section>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 # Chicago-area Public Data Explorer
 
-A filterable list of Socrata datasets from data.cityofchicago.org,
+A compilation of the data set catalogs from data.cityofchicago.org,
 datacatalog.cookcountyil.gov, and data.illinois.gov. A static page (`index.html`,
-`app.js`, `style.css`) loads one file, `data/datasets.json`.
+`app.js`, `style.css`) loads one file, `data/datasets.json`, which is updated daily via Github Actions.
 
 ## Refreshing the data
 
