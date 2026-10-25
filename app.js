@@ -246,7 +246,7 @@ function render() {
       domainTd,
       cell(fmtNum(r.numRows), 'num', 'Rows'),
       cell(fmtNum(r.numColumns), 'num', 'Columns'),
-      cell(fmtNum(r.viewsLastMonth), 'num', 'Views/mo'),
+      cell(fmtNum(r.viewsLastMonth), 'num', 'Views last mth'),
       cell(fmtNum(r.viewsTotal), 'num', 'Views total'),
       cell(fmtNum(r.downloads), 'num', 'Downloads'),
       cell(fmtDate(r.updatedAt), 'date', 'Updated'),
