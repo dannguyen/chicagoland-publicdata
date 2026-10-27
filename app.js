@@ -4,7 +4,7 @@ const DATA_URL = 'data/datasets.json';
 const NONE = '(none)';
 const FREQUENCIES = ['Daily', 'Weekly', 'Monthly', 'Other'];
 const FACETS = [
-  { key: 'domain', label: 'Domain' },
+  { key: 'domain', label: 'Locality' },
   { key: 'owner', label: 'Data Owner' },
   { key: 'frequency', label: 'Frequency', order: FREQUENCIES },
   { key: 'category', label: 'Category' },
@@ -211,10 +211,15 @@ function render() {
     a.target = '_blank';
     a.rel = 'noopener';
     a.textContent = r.name;
+    const locality = document.createElement('span');
+    locality.className = 'locality';
+    const dot = document.createElement('span');
+    dot.className = `dot ${r.domain.toLowerCase().replace(/\s+/g, '-')}`;
+    locality.append(dot, r.domain);
     const desc = document.createElement('div');
     desc.className = 'desc';
     renderDescription(desc, r);
-    nameTd.append(a, desc);
+    nameTd.append(a, locality, desc);
     if (r.rowLabel) {
       const label = document.createElement('div');
       label.className = 'freq';
@@ -236,18 +241,12 @@ function render() {
       td.textContent = text;
       return td;
     };
-    const domainTd = cell('', 'domain', 'Domain');
-    const dot = document.createElement('span');
-    dot.className = `dot ${r.domain.toLowerCase().replace(/\s+/g, '-')}`;
-    domainTd.append(dot, r.domain);
-
     tr.append(
       nameTd,
-      domainTd,
       cell(fmtNum(r.numRows), 'num', 'Rows'),
       cell(fmtNum(r.numColumns), 'num', 'Columns'),
-      cell(fmtNum(r.viewsLastMonth), 'num', 'Views last mth'),
-      cell(fmtNum(r.viewsTotal), 'num', 'Views total'),
+      cell(fmtNum(r.viewsLastMonth), 'num', 'Month views'),
+      cell(fmtNum(r.viewsTotal), 'num', 'Total views'),
       cell(fmtNum(r.downloads), 'num', 'Downloads'),
       cell(fmtDate(r.updatedAt), 'date', 'Updated'),
       cell(fmtDate(r.createdAt), 'date', 'Created'),

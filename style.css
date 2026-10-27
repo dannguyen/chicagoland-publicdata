@@ -15,11 +15,11 @@
 body {
   margin: 0; padding: 48px 24px 48px; color: var(--ink);
   background: linear-gradient(var(--chicago) 0 7px, #fff 7px 14px, var(--chicago) 14px 21px) top / 100% 21px no-repeat, #fff;
-  font: 15px/1.5 Archivo, system-ui, sans-serif;
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 h1 {
-  margin: 0 0 6px; font-size: 40px; line-height: 1; font-weight: 800; font-stretch: 72%;
-  letter-spacing: -0.005em;
+  margin: 0 0 6px; font-size: 40px; line-height: 1; font-weight: 800;
+  letter-spacing: -0.02em;
 }
 .intro { max-width: 46em; color: var(--muted); margin: 0 0 20px; }
 a { color: var(--link); text-underline-offset: 2px; }
@@ -67,11 +67,11 @@ input, select, button { font: inherit; color: inherit; }
 }
 #reset:hover { border-color: var(--ink); }
 
-/* Table. Headers are set condensed so nine columns fit, and sit on a heavy rule. */
+/* Table. Headers are set condensed so eight columns fit, and sit on a heavy rule. */
 table { border-collapse: collapse; width: 100%; }
 th, td { padding: 10px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
 thead { position: sticky; top: 0; z-index: 1; }
-th { background: #fff; white-space: nowrap; font-size: 15px; font-weight: 700; font-stretch: 80%; }
+th { background: #fff; white-space: nowrap; font-size: 15px; font-weight: 700; }
 thead tr:first-child th { padding-bottom: 4px; border-bottom: 0; }
 /* Names wrap anywhere (see td.name), so without a set share the auto layout starves this column. */
 thead tr:first-child th:first-child { width: 32%; }
@@ -82,8 +82,8 @@ tr.min-row input { width: 100%; min-width: 70px; height: 28px; font-size: 12px; 
 tr.min-row th.num input { text-align: right; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 td.date { white-space: nowrap; font-variant-numeric: tabular-nums; }
-td.domain { white-space: nowrap; font-size: 14px; }
-td.domain .dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; vertical-align: 0; }
+td.name .locality { margin-left: 8px; white-space: nowrap; font-size: 14px; color: var(--muted); }
+td.name .dot { display: inline-block; width: 9px; height: 9px; margin-right: 5px; vertical-align: 0; }
 .dot.chicago { background: var(--chicago); }
 .dot.cook-county { background: var(--cook-county); }
 .dot.illinois { background: var(--illinois); }
@@ -104,7 +104,7 @@ tbody tr:hover { background: var(--panel); }
   background: var(--panel); font-size: 16px; line-height: 1.6;
 }
 #about-this h2 {
-  margin: 0 0 10px; font-size: 26px; line-height: 1.1; font-weight: 800; font-stretch: 72%;
+  margin: 0 0 10px; font-size: 26px; line-height: 1.1; font-weight: 800;
 }
 #about-this p { margin: 0 0 12px; }
 #about-this p:last-child { margin-bottom: 0; }
@@ -112,16 +112,16 @@ tbody tr:hover { background: var(--panel); }
 /* Only shown when the sortable table header is hidden (card layout below). */
 #controls #sort-label { display: none; }
 
-/* Below ~1200px the nine table columns don't fit, so each row becomes a card: the
-   name and description, then a grid of the eight labeled stats (one row of 8, two
-   of 4, or 3/3/2 on phones). */
+/* Below ~1200px the eight table columns don't fit, so each row becomes a card: the
+   name and description, then a grid of the seven labeled stats (one row of 7, rows
+   of 4/3, or 3/3/1 on phones). */
 @media (max-width: 1200px) {
   #controls #sort-label { display: flex; }
 
   table, tbody { display: block; }
   thead { display: none; }
   tbody tr {
-    display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px 12px;
+    display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px 12px;
     padding: 14px 10px; border-bottom: 1px solid var(--rule);
   }
   tbody tr:hover { background: none; }
@@ -132,7 +132,7 @@ tbody tr:hover { background: var(--panel); }
   td.num { text-align: left; }
   tbody td[data-label]::before {
     content: attr(data-label); display: block;
-    font-size: 13px; font-stretch: 80%; color: var(--faint);
+    font-size: 13px; color: var(--faint);
   }
 }
 @media (max-width: 860px) {
