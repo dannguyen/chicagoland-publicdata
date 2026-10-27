@@ -9,6 +9,7 @@ on:
       - index.html
       - app.js
       - style.css
+      - og-image.png
       - .github/workflows/deploy.yml
   workflow_dispatch:
 

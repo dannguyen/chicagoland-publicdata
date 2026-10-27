@@ -11,7 +11,7 @@
     "discover": "npm run fetch:catalogs && npm run fetch:metadata:discover",
     "refresh": "npm run fetch:catalogs && npm run fetch:metadata && npm run build",
     "test": "node --test test/*.test.mjs",
-    "site": "rm -rf _site && mkdir -p _site/data && cp index.html app.js style.css _site/ && cp data/datasets.json _site/data/"
+    "site": "rm -rf _site && mkdir -p _site/data && cp index.html app.js style.css og-image.png _site/ && cp data/datasets.json _site/data/"
   },
   "engines": {
     "node": ">=22.9"
